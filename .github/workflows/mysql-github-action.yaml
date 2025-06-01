@@ -24,18 +24,7 @@ jobs:
         AWS_REGION: us-east-1
 
     - name: Build and Push MySQL Docker Image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: assignment-1-dev-ecr
-        IMAGE_TAG: mysql-latest
       run: |
-        # Define full image tag
-        FULL_IMAGE_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-        echo "Building image from Dockerfile_mysql and tagging as $FULL_IMAGE_TAG"
-
-        # Build the Docker image
-        docker build -f Dockerfile_mysql -t $FULL_IMAGE_TAG .
-
-        # Push the Docker image to ECR
-        docker push $FULL_IMAGE_TAG
+          docker build -t aasignment-mysql -f Dockerfile_mysql .
+          docker tag aasignment-mysql:latest 069173813596.dkr.ecr.us-east-1.amazonaws.com/assignment-1-dev-ecr:latest
+          docker push 069173813596.dkr.ecr.us-east-1.amazonaws.com/assignment-1-dev-ecr:latest
