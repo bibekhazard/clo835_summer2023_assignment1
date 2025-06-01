@@ -2,15 +2,15 @@ name: Deploy to ECR
 # updated ECR Repo week3-1 01/22
 on: 
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   
   build:
     
     name: Build Image
-    runs-on: self-hosted
-
+    runs-on:
+      labels: assignment
     steps:
     - name: Check out code
       uses: actions/checkout@v4
