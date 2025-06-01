@@ -1,16 +1,15 @@
 name: Deploy to ECR
-# updated ECR Repo week3-1 01/22
+# Trigger the workflow on push to main branch
 on: 
   push:
     branches: [ main ]
 
 jobs:
-  
   build:
-    
-    name: Build Image
+    name: Build and Push MySQL Image
     runs-on:
       labels: assignment
+
     steps:
     - name: Check out code
       uses: actions/checkout@v4
@@ -24,14 +23,19 @@ jobs:
         AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
         AWS_REGION: us-east-1
 
-    - name: Build, test, tag, and pushing image to Amazon ECR
+    - name: Build and Push MySQL Docker Image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: assignment-1-dev-ecr
-        IMAGE_TAG: latest
-        Image_TAG_MYSQL: mysql-latest 
+        IMAGE_TAG: mysql-latest
       run: |
-        # Docker build command for app
-        docker build -f Dockerfile_mysql -t $ECR_REPOSITORY:$IMAGE_TAG_MYSQL .
-        # Docker push command for app
-        docker push $ECR_REPOSITORY:$IMAGE_TAG_MYSQL
+        # Define full image tag
+        FULL_IMAGE_TAG=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+        echo "Building image from Dockerfile_mysql and tagging as $FULL_IMAGE_TAG"
+
+        # Build the Docker image
+        docker build -f Dockerfile_mysql -t $FULL_IMAGE_TAG .
+
+        # Push the Docker image to ECR
+        docker push $FULL_IMAGE_TAG
