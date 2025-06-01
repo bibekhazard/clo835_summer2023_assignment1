@@ -25,6 +25,6 @@ jobs:
 
     - name: Build and Push MySQL Docker Image
       run: |
-          docker build -t aasignment-mysql -f Dockerfile_mysql .
-          docker tag aasignment-mysql:latest 069173813596.dkr.ecr.us-east-1.amazonaws.com/assignment-1-dev-ecr:mysql-latest
+          docker build -t assignment-mysql -f Dockerfile_mysql .
+          docker tag assignment-mysql:latest 069173813596.dkr.ecr.us-east-1.amazonaws.com/assignment-1-dev-ecr:mysql-latest
           docker push 069173813596.dkr.ecr.us-east-1.amazonaws.com/assignment-1-dev-ecr:mysql-latest
