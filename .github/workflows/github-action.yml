@@ -28,9 +28,14 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: assignment-1-dev-ecr
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: latest
+        Image_TAG_MYSQL: mysql-latest 
       run: |
-        # Docker build command
+        # Docker build command for app
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-        # Unit test
+        # Docker push command for app
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        # Docker build command for mysql
+        docker docker build -f Dockerfile_mysql  -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # Docker push command for  mysql
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG_MYSQLSQL
