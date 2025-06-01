@@ -1,5 +1,5 @@
 name: Deploy MYSQL To ECR
-# Trigger the workflow on push to main branch
+## Trigger the workflow on push to main branch
 on: 
   push:
     branches: [ main ]
